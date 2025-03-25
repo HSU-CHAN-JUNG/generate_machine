@@ -1,3 +1,4 @@
+### 參考於 https://hackmd.io/@Tu32/Bkq3fQi0s
 import numpy as np
 import torch
 import torch.nn as nn
