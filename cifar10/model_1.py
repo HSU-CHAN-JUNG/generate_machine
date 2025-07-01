@@ -15,23 +15,17 @@ class DoubleConv(nn.Module):
     self.conv1 = nn.Sequential(
         nn.Conv2d(in_c, out_c, kernel_size=3, padding=1),
         nn.GroupNorm(4, out_c), #equivalent with LayerNorm
-        # nn.BatchNorm2d(out_c), # 取平均，比較不會Overfitting
         nn.SiLU()
     )
     self.conv2 = nn.Sequential(
         nn.Conv2d(out_c, out_c, kernel_size=3, padding=1),
         nn.GroupNorm(4, out_c), #equivalent with LayerNorm
-        # nn.BatchNorm2d(out_c), # 取平均，比較不會Overfitting
         nn.SiLU()
     )
 
   def forward(self, x):
     x = self.conv1(x)
     x = self.conv2(x)
-    x = self.conv2(x)
-    # x = self.conv2(x)
-    # x = self.conv2(x)
-    # x = self.conv2(x)
     return x
 
 class Down(nn.Module):
@@ -50,7 +44,6 @@ class Down(nn.Module):
 
   def forward(self, x, t):
     x = self.down(x)
-    #擴充兩個dimension，然後使用repeat填滿成和圖片相同(如同numpy.tile)
     t_emb = self.emb_layer(t)[:, :, None, None].repeat(1, 1, x.shape[-2], x.shape[-1])
     return x + t_emb
 
@@ -151,6 +144,7 @@ class Unet(nn.Module):
         x4 = self.sa3(x4)
         # x5 = self.down4(x4, t)
         # x5 = self.sa4(x5)
+      
         #Bottle neck
         x4 = self.bot1(x4)
         x4 = self.bot2(x4)
