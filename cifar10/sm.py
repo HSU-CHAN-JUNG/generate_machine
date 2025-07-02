@@ -94,11 +94,6 @@ if __name__ == '__main__':
             # mu_k = mu(ep)
             # update_theta_mius(f_theta, f_theta_mius, mu_k)
 
-            # if (i+1) % accumulation_steps == 0:
-            #     optimizer.step()  # 神經網路參數更新
-            #     optimizer.zero_grad()  # 梯度清0
-            #     mu_k = mu(ep)
-            #     update_theta_mius(f_theta, f_theta_mius, mu_k)
             pbar.set_description('Loss: {}'.format(loss.item()))  # 更新pbar
             # print('Loss{}: {}'.format(loss.item()))
             # lr = 8e-5 if loss<0.02 else 1e-3
